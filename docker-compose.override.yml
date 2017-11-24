@@ -8,6 +8,9 @@ services:
       - ConnectionStrings:LeaderboardContext=Server=sql.data;Database=LeaderboardNETCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
     ports:
       - "1337:1337"
+    networks:
+      - backend
+      - frontend
 
   gamingwebapp:
     environment:
@@ -15,6 +18,8 @@ services:
       - LeaderboardWebApiBaseUrl=http://leaderboard.webapi:1337
     ports:
       - "8080:80"
+    networks:
+      - frontend
 
   sql.data:
     environment:
@@ -23,3 +28,11 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433"
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
