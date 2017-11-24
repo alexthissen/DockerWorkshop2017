@@ -12,6 +12,3 @@ services:
     build:
       context: ./src/Applications/GamingWebApp
       dockerfile: Dockerfile
-
-  sql.data:
-    image: microsoft/mssql-server-linux

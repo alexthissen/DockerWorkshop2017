@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using GamingWebApp.Models;
+﻿using GamingWebApp.Models;
 using GamingWebApp.Proxies;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GamingWebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger logger;
-        private readonly IConfiguration configuration;
+        private readonly IOptionsSnapshot<WebAppSettings> settings;
 
-        public HomeController(IConfiguration configuration, ILoggerFactory loggerFactory)
+        public HomeController(IOptionsSnapshot<WebAppSettings> settings, ILoggerFactory loggerFactory)
         {
             this.logger = loggerFactory.CreateLogger<HomeController>();
-            this.configuration = configuration;
+            this.settings = settings;
         }
         public async Task<IActionResult> Index()
         {
-            LeaderboardProxy proxy = new LeaderboardProxy(configuration["LeaderboardWebApiBaseUrl"], logger);
+            LeaderboardProxy proxy = new LeaderboardProxy(settings.Value.LeaderboardWebApiBaseUrl, logger);
             var leaderboard = await proxy.GetLeaderboardAsync();
             return View(leaderboard);
         }

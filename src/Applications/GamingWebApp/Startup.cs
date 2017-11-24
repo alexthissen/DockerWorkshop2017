@@ -28,6 +28,7 @@ namespace GamingWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.Configure<WebAppSettings>(Configuration);
             services.AddMvc();
         }
 
