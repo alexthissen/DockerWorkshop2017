@@ -23,6 +23,10 @@ namespace Leaderboard.WebAPI
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>(true);
+            }
             Configuration = builder.Build();
 
             builder.AddAzureKeyVault(

@@ -3,14 +3,17 @@ version: '3'
 services:
   leaderboard.webapi:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:1337
       - ConnectionStrings:LeaderboardContext=Server=sqldata;Database=LeaderboardNetCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
+      - USER_SECRETS_ID=ec3d7cd1-2afd-4080-9128-d320acc85a13
     ports:
       - "1337:1337"
     networks:
       - backend
       - frontend
+    volumes:
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
 
   gamingwebapp:
     environment:
