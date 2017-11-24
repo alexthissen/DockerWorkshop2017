@@ -3,16 +3,14 @@ version: '3'
 services:
   leaderboard.webapi:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://0.0.0.0:1337
-      - ConnectionStrings:LeaderboardContext=Server=sql.data;Database=LeaderboardNETCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
+      - ConnectionStrings:LeaderboardContext=Server=tcp:sdp2017sql.database.windows.net,1433;Initial Catalog=LeaderboardNetCore;Persist Security Info=False;User ID=sdp2017;Password=abc123!@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
     ports:
       - "1337:1337"
     networks:
       - backend
       - frontend
-    depends_on:
-      - "sql.data"
 
   gamingwebapp:
     environment:
@@ -24,17 +22,6 @@ services:
       - frontend
     depends_on:
       - "leaderboard.webapi"
-
-  sql.data:
-    image: microsoft/mssql-server-linux
-    environment:
-      - SA_PASSWORD=Pass@word
-      - MSSQL_PID=Developer
-      - ACCEPT_EULA=Y
-    ports:
-      - "5433:1433"
-    networks:
-      - backend
 
 networks:
   frontend:
