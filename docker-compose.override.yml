@@ -4,11 +4,13 @@ services:
   leaderboard.webapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:1337
     ports:
-      - "80"
+      - "1337:1337"
 
   gamingwebapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - LeaderboardWebApiBaseUrl=http://leaderboard.webapi:1337
     ports:
-      - "80"
+      - "8080:80"
