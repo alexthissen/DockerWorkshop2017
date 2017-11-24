@@ -17,6 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingWebApp", "src\Applica
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DE69EF4D-D2AC-4385-807C-19220ED495C5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{D168DD01-99E8-4F36-80EB-F5210A0C1CE8}"
+	ProjectSection(SolutionItems) = preProject
+		sql\CreateAzureSqlUser.sql = sql\CreateAzureSqlUser.sql
+		sql\CreateDatabase.sql = sql\CreateDatabase.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

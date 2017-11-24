@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  leaderboardwebapi:
+    image: sdp2017/leaderboard.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:1337
+      - ConnectionStrings:LeaderboardContext=Server=sqldata;Database=LeaderboardNETCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
+    ports:
+      - "2000:1337"
+    networks:
+      - backend
+      - frontend
+
+  gamingwebapp:
+    image: sdp2017/gamingwebapp
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - LeaderboardWebApiBaseUrl=http://leaderboardwebapi:1337
+    ports:
+      - "80:80"
+    depends_on:
+      - "leaderboardwebapi"
+    networks:
+      - frontend
+
+  sqldata:
+    image: microsoft/mssql-server-linux
+    environment:
+      - SA_PASSWORD=Pass@word
+      - MSSQL_PID=Developer
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: overlay
+  backend:
+    driver: overlay
