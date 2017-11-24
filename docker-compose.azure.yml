@@ -7,7 +7,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:1337
       - ConnectionStrings:LeaderboardContext=Server=tcp:sdp2017sql.database.windows.net,1433;Initial Catalog=LeaderboardNetCore;Persist Security Info=False;User ID=sdp2017;Password=abc123!@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-      - ConnectionStrings:LeaderboardContext2=Server=sqldata;Database=LeaderboardNetCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
     ports:
       - "2000:1337"
     networks:
