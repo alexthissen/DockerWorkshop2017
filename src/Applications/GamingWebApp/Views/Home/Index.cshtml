@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h2>Highscore list</h2>
+<ul>
+    @foreach (var score in this.Model)
+    {
+        <li>@score.game:  @score.points - @score.nickname</li>
+    }
+</ul>
+<img src="http://sdp3.blob.core.windows.net/images/sela-logo.png" width="200" />
