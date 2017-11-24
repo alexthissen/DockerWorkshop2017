@@ -10,6 +10,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leaderboard.WebAPI", "src\Services\Leaderboard.WebAPI\Leaderboard.WebAPI.csproj", "{245704F6-384D-417E-8697-DEAC7C4739EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6E7F5C8F-82CB-4CA6-B6AA-D48395AA8BD6}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Lab0-GettingStarted.md = docs\Lab0-GettingStarted.md
+		docs\Lab1-Docker101.md = docs\Lab1-Docker101.md
+		docs\Lab2-DockerizingNETCore.md = docs\Lab2-DockerizingNETCore.md
+		docs\Lab3-Networking.md = docs\Lab3-Networking.md
+		docs\Lab4-Environments.md = docs\Lab4-Environments.md
+		docs\Lab5-RegistriesClusters.md = docs\Lab5-RegistriesClusters.md
+		docs\Lab6-Security.md = docs\Lab6-Security.md
+		docs\Lab7-VSTSPipelines.md = docs\Lab7-VSTSPipelines.md
+		docs\Lab8-Explore.md = docs\Lab8-Explore.md
+		docs\Readme.md = docs\Readme.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{564F2D43-95E8-46FA-9F80-35FA2F6020A5}"
 EndProject
