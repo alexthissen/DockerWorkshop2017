@@ -4,7 +4,7 @@ services:
   leaderboardwebapi:
     image: sdp2017/leaderboard.webapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://0.0.0.0:1337
       - ConnectionStrings:LeaderboardContext=Server=tcp:sdp2017sql.database.windows.net,1433;Initial Catalog=LeaderboardNetCore;Persist Security Info=False;User ID=sdp2017;Password=abc123!@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
     ports:
