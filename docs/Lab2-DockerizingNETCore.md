@@ -197,4 +197,4 @@ With this change, you should be able to run your application completely from con
 ## Wrapup
 In this lab you have added Docker support to run both of your projects from Docker containers as well as the SQL Server instance. You enhanced the Docker Compose file that describes the composition of your complete application. in the next lab you will improve the networking part of the composition.
 
-Continue with [Lab 3 - Networking](lab3-networking.md).
+Continue with [Lab 3 - Networking](Lab3-Networking.md).

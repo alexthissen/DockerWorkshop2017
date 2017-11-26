@@ -1,4 +1,4 @@
-# Lab 8 - Exploration
+# Lab 8 - Free exploration
 
 Goals for this lab is to experiment with a number of improvements to the solution. You are free to investigate, explore and experiment.
 
@@ -30,4 +30,4 @@ Inspect the possible options with `docker service update --help` and select whic
 
 ### Health endpoints and monitoring
 
-Your containers are able to indicate their health via so-called health 
+Your containers are able to indicate their health via so-called health endpoints. Try to build such endpoints into your services and include them in the Docker composition file. 

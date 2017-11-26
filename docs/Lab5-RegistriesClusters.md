@@ -240,4 +240,4 @@ Try to deploy the stack again using Azure SQL Database now instead of the contai
 
 In this lab you have created a composition that is able to deploy a stack of services to a cluster. Necessary changes to the environment variables were made and perhaps you even got to use an Azure SQL Database. 
 
-Continue with [Lab 6 - Security](lab6-security.md).
+Continue with [Lab 6 - Security](Lab6-Security.md).
