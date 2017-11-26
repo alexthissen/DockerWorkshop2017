@@ -93,3 +93,27 @@ The newly built Docker images are now located in the Docker Hub. You can release
 Create a new release definition from the Releases tab in VSTS. Choose an `Empty process` and name the first environment `Production`. Navigate to its empty task list and set the Agent selection to `Hosted` under the Agent phase.
 
 Add a Docker task to execute a remote command over SSH. You need a SSH connection that you can create from the task property for the connection.
+
+## Improve deployment details
+
+You can indicate how the individual services will be deployed inside your composition. The compose file allows you to indicate deployment characteristics per service with a `deploy` section. 
+
+Add a `deploy` section to the web application to indicate it should be deployed with 2 running replicas (copies):
+```
+deploy:
+  replicas: 2
+```
+
+Similarly, do the same for the Web API service, but additionally describe its restart behavior.
+```
+deploy:
+  replicas: 1
+  restart_policy:
+  condition: on-failure
+  delay: 5s
+  max_attempts: 3
+```
+
+## Wrapup
+
+In this lab you have created a build pipeline to build and push the container images for your .NET solution. You used a release pipeline to deploy the composition to a cluster in Azure. Additionally, you added deployment details to the composition file to describe the replicas and restart behavior of your stack.

@@ -1,18 +1,22 @@
 # Lab 1 - Docker 101
-Goals for this lab: 
-- Inspect Docker environment on local machine
-- Get familiar with Docker CLI
-- Manage container images and instances
-- Connect to and interact with Docker cluster
 
-## Inspect your Docker environment
+In this lab you will become more familiar with the Docker command-line interface (CLI). 
+
+Goals for this lab: 
+- [Inspect Docker environment on local machine](#inspect)
+- [Manage container images and instances](#manage)
+- [Working with container images](#working)
+
+## <a name="inspect"></a>Inspect your Docker environment
 Let's check whether your Docker Community Edition tooling is correctly set up. Also, you might need to get familiar with the Docker tooling.
 
 You should see the Docker tooling running. On Windows, you can check this by looking for a tray icon like this:
-![](images\dockertray.png)
+
+![](images/dockertray.png)
 
 If you cannot find the Docker icon in the tray, you might need to start the Docker tooling. After starting the Docker tooling you should see the following dialog:
-![](images\dockerrunning.png)
+
+<img src="images/dockerrunning.png" height="500"/>
 
 Start a Developer Command Prompt and run the following commands:
 
@@ -48,7 +52,7 @@ Server:
  OS/Arch:      linux/amd64
  Experimental: true
 ```
-## Managing container instances
+## <a name="manage"></a>Managing container instances
 Let's see whether you can start some container instances. The categorical sample is "Hello World". Start a container that should run if everything is configured correctly. From a command prompt, run the following command:
 ```
 docker run hello-world
@@ -74,15 +78,23 @@ This is because the `hello-world` container instance has already stopped after p
 
 Next, start a new container with:
 ```
-docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v /opt/portainer:/data portainer/portainer
 ```
-Navigate to http://localhost:9000 and create a login for your local machine. The management UI might come in useful to manage Docker on your machine.
+Navigate to http://localhost:9000 and create a login for your local machine. Choose to manage the local machine. The management UI might come in useful to manage Docker on your machine.
 
-Also start a container to run an instance of SQL Server on Linux. 
-Since SQL Server for Linux has an existing image in Docker Hub, you can search for it from the Docker CLI:
-
+Search the Docker Hub for public images. Try searching for `ngingx` which is a reverse proxy.
 ```
-docker search SQL Server
+docker search nginx
+docker pull nginx
+docker run -it --name docker-nginx -p 8090:80 nginx
+```
+
+The last command seems to block. That's okay. Navigate to http://localhost:8090. You will notice that the output of the nginx container is now filling the console. The prompt is missing. This is because you are now attached to the container. To detach use the key combination `Ctrl+P, Ctrl+Q` to detach from the container and return to the prompt.
+Inspecting the running containers with `docker ps`, you should find that the nginx container is still running.
+
+Next, start a container to run an instance of SQL Server on Linux. 
+The image for SQL Server for Linux is located in the Docker Store, since it is an official image. Navigate to http://store.docker.com and search for SQL Server there. Pull the image when you found its name:
+```
 docker pull microsoft/mssql-server-linux
 ```
 
@@ -106,18 +118,27 @@ Examine the contents of the database by adding a Data Connection in the Server E
 - Password: Pass@word
 - Database name: LeaderboardNetCore
 
-![](images\AddDataConnection.png)
+<img src="images/AddDataConnection.png" width="400" />
 
 Inspect the running containers again with `docker ps`. 
 
-## Working with container images
+Stop and remove the `nginx` container with these commands:
+```
+docker stop docker-nginx
+docker ps -a
+docker rm docker-nginx
+```
+
+Do the same for the `hello-world` container by using its container ID or the generated two-part name, which is something like `loving_newton`.
+
+## <a name="working"></a>Working with container images
 By running the examples above you will have downloaded some container images. You can see which ones are available on your machine by the following command:
 ```
 docker images
 ```
 Remove the image `hello-world`:
 ``` 
-docker rm hello-world
+docker rmi hello-world
 ```
 ## Wrapup
 You have just learned some of the basic commands in the Docker CLI to manage both container instances and images. There is a lot more to discover with Docker commands, but you will encounter this during the rest of the labs.
