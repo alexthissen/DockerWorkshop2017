@@ -2,13 +2,13 @@ version: '3'
 
 services:
   leaderboard.webapi:
-    image: leaderboard.webapi
+    image: sdp2017/leaderboard.webapi
     build:
       context: ./src/Services/Leaderboard.WebAPI
       dockerfile: Dockerfile
 
   gamingwebapp:
-    image: gamingwebapp
+    image: sdp2017/gamingwebapp
     build:
       context: ./src/Applications/GamingWebApp
       dockerfile: Dockerfile
