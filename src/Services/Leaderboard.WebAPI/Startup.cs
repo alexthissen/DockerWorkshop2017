@@ -27,6 +27,10 @@ namespace Leaderboard.WebAPI
             {
                 builder.AddUserSecrets<Startup>(true);
             }
+            if (env.IsProduction())
+            {
+                builder.AddDockerSecrets();
+            }
             Configuration = builder.Build();
 
             builder.AddAzureKeyVault(
