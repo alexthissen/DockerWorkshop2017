@@ -1,14 +1,17 @@
 # Lab 4 - Working with environments
+
+In this lab you will learn how to create and run compositions. 
+
 Goals for this lab:
-- Create compositions for different environments
-- Change implementation to work with environment variables
+- [Working with compositions and Docker Compose](#work)
+- [Create compositions for different environments](#create)
+- [Change implementation to work with environment variables](#change)
 
-In this lab you will learn how to create and run compositions. Docker Compose is the tool of choice for this lab to manage compositions of containers. There are other tools that allow the creation of compositions, such as the YAML files of Kubernetes. 
-
-## Working with compositions and Docker Compose
+## <a name="work"></a>Working with compositions and Docker Compose
 
 Compositions are essential to manage the many different combinations of containers, images, run-time details and environmental settings. Typically an application consists of multiple running containers. Managing each of these individually is both difficult and labor intensive. Moreover, it does not define the relationships and dependencies that exist.
-Docker Compose is a tool that allows you to use a Command-line Interface to interact with compositions defined in a docker-compose.yml file.
+
+Docker Compose is the tool of choice for this lab to manage compositions of containers. It allows you to use a command-line interface, similar to the Docker CLI, to interact with compositions defined in a `docker-compose.yml` file. There are other tools that allow the creation of compositions, such as the YAML files of Kubernetes. You will use Docker Compose in this lab.
 
 To become familiar with Docker Compose you will first start a container based on a YAML file using `docker-compose.exe`. Take a look at the Visual Studio solution and examine the `docker-compose.ci.build.yml` file.
 
@@ -35,7 +38,7 @@ The command will 'up' (meaning 'start') the composition and perform a build and 
 
 Later you will use this composition in your build pipeline to perform the build and publishing of the binaries required to create the container images of the solution.
 
-## Create compositions for different environments
+## ## <a name="create"></a>Create compositions for different environments
 
 One of the useful features of Docker Compose is the layering and cascading of multiple YAML compose files. With it you can introduce concepts such as base compositions, inheritance and overrides.
 
@@ -101,13 +104,13 @@ Additionally, create a `appsettings.production.json` and change the settings to 
 > Which settings can be considered dynamic or static? What happens with the various environment specific settings in the `appsettings.json` file? What type of settings can you store there? Change your file accordingly.
 
 
-## Working with environments in .NET Core
+## <a name="change"></a>Working with environments in .NET Core
 
 In this sample application the web application only has a single setting for an external Web API endpoint.
-
 ```
 - LeaderboardWebApiBaseUrl=http://leaderboard.webapi:1337
 ```
+
 Even so, you can formalize a group of related settings, regardless of their origin. This can be from one of the `appsettings.json` files, `docker-compose.override.yml` files or even environment variables. 
 
 In the web application project create a new class called `WebAppSettings` and give it a single `string` property called  `LeaderboardWebApiBaseUrl`. In more complex scenarios this class would contain more properties for each of the settings.
@@ -136,4 +139,6 @@ While you are looking at this, follow the code to the proxy implementation and g
 
 ## Wrapup
 
-In this lab you have examined the way environments can be used to distinguish various hosting situations for your Docker composition. It is important to know which settings must be changeable for different environemnts, as the Docker images that you build cannot be changed internally. 
+In this lab you have examined the way environments can be used to distinguish various hosting situations for your Docker composition. It is important to know which settings must be changeable for different environemnts, as the Docker images that you build cannot be changed internally.
+
+Continue with [Lab 5 - Registries and clusters](lab5-RegistriesClusters.md).

@@ -144,3 +144,5 @@ docker rmi hello-world
 You have just learned some of the basic commands in the Docker CLI to manage both container instances and images. There is a lot more to discover with Docker commands, but you will encounter this during the rest of the labs.
 
 Keep the container with the SQL Server developer instance running, as we will need it in the next lab.
+
+Continue with [Lab 2 - Dockerizing .NET Core](lab2-DockerizingNETCore.md).

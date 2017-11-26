@@ -1,17 +1,22 @@
 # Lab 5 - Container registries and clusters
-Goals for this lab:
-- Push images to Docker Hub registry
-- Create and enhance cluster composition for Docker Swarm
-- Deploy images to cluster 
-- Run and manage composition in cluster  
 
-## Pushing images to a registry
+In this lab you are going to learn about registries and clusters. This includes pushing images to the registry and deploying compositions to a running cluster.
+
+Goals for this lab:
+- [Push images to Docker Hub registry](#push)
+- [Connecting to your cluster](#connect)
+- [Create and enhance cluster composition for Docker Swarm](#create)
+- [Deploy images to cluster](#deploy)
+- [Run and manage composition in cluster](#run)
+- [(Optional) Switch to Azure SQL Database](#sql)
+
+## <a name="push"></a>Pushing images to a registry
 
 Docker registries are to Docker container images what NuGet feeds are to NuGet packages. They allow access to existing images that have been published by the owner. They can be private or publicly accessible.
 
 Visit the website of [Docker Hub](https://hub.docker.com/) at https://hub.docker.com/ and sign up for a new account. If you have one already, you might want to create a new organization.
 
-![](images\emptyDockerHub.png)
+<img src="images/emptyDockerHub.png" width="500"/>
 
 Alternatively you can also create an Azure Container Registry which allows (multiple) private repositories inside your registry. 
 
@@ -89,11 +94,12 @@ With PuTTY.exe
 Open the [Azure Portal](https://portal.azure.com). Find the public IP address of the management endpoint for your cluster and the public DNS entry for the cluster. Examine `Deployments` of the resource group and follow the link to the deployment details. For the deployment called `Microsoft.Template`, you will find the `SSH TARGETS` output value. Copy the URL navigate to that address.
 
 In the portal blade that opens, make note of the `Destination` IPv4 address that is listed and the `SERVICE` port number listed. Use the IP address prepended with `docker@` for the `Host Name` in the PuTTY Session dialog (top item in the tree) and the port number.
-![](images/PuTTYSessions.png)
+<img src="images/PuTTYSessions.png" width="500"/>
 
 Navigate to the `Connection/SSH/Auth` node and specify your `sdp2017swarm_privatekey.ppk` file path in the dialog at the bottom text box.
 Lastly, add a tunnel from port 2374 in the cluster to localhost:2374 on your local machine.
-![](images/PuTTYTunnels.png)
+
+<img src="images/PuTTYTunnels.png" width="500"/>
 
 > ##### Connection to your cluster (alternative)
 > Another way to connect to the cluster is to run `Git Shell`, or any other command-line console that has support for SSH. In such a console, run the following command:
@@ -113,7 +119,11 @@ The `docker-compose.production.yml` file contains enough information for a simpl
 Start a PowerShell command prompt and set the `$env:workshop` variable again if necessary.
 Similarly set the environment variable for `DOCKER_HOST` to be that of your created tunnel:
 ```
-$env:DOCKER_HOST = 'tcp://localhost:2374'
+$env:DOCKER_HOST = "tcp://localhost:2374"  -- PowerShell or Git Shell
+
+- or -
+SET DOCKER_HOST=tcp://localhost:2374       -- Command prompt
+export DOCKER_HOST="tcp://localhost:2374"  -- Bash shell
 ```
 You should now be able to run `docker images` and get a list of images unlike those on your local machine:
 ```
@@ -134,7 +144,9 @@ docker stack ls
 ```
 These will probably both be empty.
 
-To deploy a Docker composition to your cluster you can use the command:
+## <a name="Create"></a>Create cluster composition for Docker Swarm
+
+To deploy a Docker composition to your cluster you can use Docker Compose files with the following command:
 ```
 docker stack deploy -c <docker-compose file> retrogamingstack
 ```
@@ -178,7 +190,7 @@ docker stack services retrogamingstack      -- Show services in stack
 docker stack rm retrogamingstack            -- Remove stack deployment
 ```
 
-## Stretch exercise: Switch to Azure SQL Database
+## <a name="sql"></a>(Optional) Switch to Azure SQL Database
 
 If you have time left, you can remove the SQL Server container altogether and switch to Azure SQL Database.
 The steps you need to do are:
@@ -227,3 +239,5 @@ Try to deploy the stack again using Azure SQL Database now instead of the contai
 ## Wrapup
 
 In this lab you have created a composition that is able to deploy a stack of services to a cluster. Necessary changes to the environment variables were made and perhaps you even got to use an Azure SQL Database. 
+
+Continue with [Lab 6 - Security](lab6-security.md).

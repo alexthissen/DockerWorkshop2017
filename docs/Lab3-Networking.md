@@ -1,10 +1,13 @@
 # Lab 3 - Networking
-Goals for this lab:
-- Experiment with networking
-- Create networks for application from CLI
-- Define multiple networks in composition
 
-## Experimenting with networking
+This lab will give you time to work with the various networking features of the Docker stack and implement a network design in your current application.
+
+Goals for this lab:
+- [Experiment with networking](#experiment)
+- [Create networks for application from CLI](#create)
+- [Define multiple networks in composition](#define)
+
+## <a name="experiment"></a>Experimenting with networking
 
 To start out, you are going to experiment a little with the networking stack of Docker.
 Run a couple of commands from the Docker CLI to investigate the existing networks:
@@ -28,7 +31,7 @@ Read each of the JSON fragments. Pay special attention to the `Config` object in
 
 Shut down any running compositions, by stopping your Visual Studio debugging session and any manually started containers of the demo application.
 
-## Creating networks manually
+## <a name="create"></a>Create networks manually
 
 Let's create a new network and run a couple of containers in them. 
 ```
@@ -62,7 +65,7 @@ docker run -itd --name c3 --ip 10.0.0.123 --net sela_specific --network-alias c3
 ```
 You should be able to ping container `c3` from inside itself with `ping c3.seladeveloperpractice.local`. Also, inspect the network again to see the running containers in it. 
 
-## Networks from docker compositions
+## <a name="define"></a>Define networks in docker compositions
 
 The final step is to design your network topology and use the Docker Compose YAML files to specify the networks and aliases for the containers.
 
@@ -111,3 +114,5 @@ After defining this alias, change the connection string setting of the `Leaderbo
 ## Wrapup
 
 In this lab you experimented with networks in Docker from the command line and later with definitions in compositions. You applied network segmentation to separate the container instances from each other, to improve network security.
+
+Continue with [Lab 4 - Environments](lab4-Environments.md)

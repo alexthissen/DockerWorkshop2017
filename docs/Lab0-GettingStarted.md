@@ -106,3 +106,5 @@ Finally, click `Purchase` to generate the Docker Swarm Mode cluster. This does n
 
 ## Wrapup
 You have prepared your laptop and cloud environment to be ready for the next labs. Any issues you may have, can probably be resolved during the labs. Ask your fellow attendees or the proctor to help you, if you cannot solve the issues.
+
+Continue with [Lab 1 - Docker101](lab1-docker101.md).

@@ -1,5 +1,7 @@
 # Lab 6 - Security
 
+During this lab you will look at a specific security related aspect for containers: secrets in configuration. There is a lot more to be said and done about security  for containers though. Your focus will be to remove all secrets from configuration files and into secure stores for development and production.
+
 Goals for this lab:
 - [Add support for Azure Key Vault to store secrets](#keyvault)
 - [Store user secrets during development](#usersecrets)
@@ -25,22 +27,29 @@ Pick any running container, but preferably the web API which actually contains t
     Trusted_Connection=False"
 ],
 ```
-Docker containers are inspectable and it is non-trivial to have secrets.
+
+You can also look at the history of images and see the various commands that were used to build them. Try running:
+```
+docker history microsoft/mssql-server-linux
+docker history microsoft/mssql-server-linux --no-trunc
+```
+Docker containers and their images are inspectable and it is non-trivial to work with secrets in a secure way. Let's find out how to do that.
 
 ## <a name='keyvault'></a>Adding support for Azure Key Vault
 
 You can use Azure Key Vault to store sensitive information, such as  connections, certificates or accounts, in keys, secrets and certificates.
 
 Visit the [Azure Portal](https://portal.azure.com) and create a Key Vault resource in your resource group. Ideally you would place the KeyVault in a separate resource group, as its lifetime should be surpassing that of the container cluster's group. It needs to have a unique name. Take note of the DNS name of the Key Vault in the `Properties` section.
-![](images/KeyVaultDNSName.png)
+
+<img src="images/KeyVaultDNSName.png" width="400" />
 
 Next, allow the Web API access to the Key Vault. Register the web API as an Azure Active Directory application. Go to the Azure Active Directory for your Azure subscription and choose `App Registrations`. Create a new application registration called `Leaderboard Web API` of type `Web app / API` and use the local URL `http://localhost:1337` as the Sign-on URL value.
 
-![](images/AzureADAppRegistration.png)
+<img src="images/AzureADAppRegistration.png" width="300" />
 
 This Azure AD application registration represents a service principal that you are going to give access to the Azure Key Vault. Store the application ID of the application that is displayed in the `Essentials` section.
 
-![](images/AADApplicationID.png)
+<img src="images/AADApplicationID.png" width="600" />
 
 Allow the Web API service principal to access the Key Vault. For that you need a Client ID and Secret. The Client ID is the application ID you stored earlier. The secret is a key you have to create under the application registration. Go to the `Keys` section and create a password. Give it `KeyVaultSecret` as a name. Set its expiration date to a year and save it. Make sure you copy and store the value that is generated. It should resemble the following format:
 ```
@@ -125,10 +134,12 @@ You need only one of the two entries for the volumes. The entry mapping `$HOME` 
 
 Using user secrets is well suited for development scenarios and single host machine. When running in a cluster for production scenarios it is not recommended. Instead you can use Docker Secrets to add secrets to your cluster host machines. 
 
-## <a name='dockersecrets'></a>(Experimental) Using Docker Secrets
+## <a name='dockersecrets'></a>(Optional) Using Docker Secrets
+
+> ##### Experimental status
+> Be aware that this part of the lab uses unreleased code. The results might not always be successful. Do not spend too much time on this part if it does not work. On the other hand: do not give up too easily.
 
 You can store the secrets in a secure way in your cluster. The way this is done depends on the type of orchestrator you have. For Docker Swarm Mode clusters it uses Docker Secrets. In this final step you are going to create three secrets for the Azure Key Vault connection details, so all secrets are securely stored in a combination of the cluster and the Azure Key Vault. 
-
 Open a Docker CLI and connect to your cluster. Run the following commands:
 ```
 docker secret ls
@@ -172,3 +183,5 @@ Inside the service for `leaderboardwebapi` of the `docker-stack.azure.yml` file 
 ## Wrapup
 
 In this lab you have stored the secrets of your application in the Azure Key Vault. You also moved the remaining secrets, containing the details to get access to the vault, in user secrets for development scenarios. In production these secrets would be stored as Docker secrets. Support for .NET Core is still under development.
+
+Continue with [Lab 7 - VSTS Pipelines](lab7-VSTSPipelines.md).

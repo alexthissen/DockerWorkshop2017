@@ -1,11 +1,15 @@
 # Lab 2 - Dockerizing a .NET Core application
-Goals for this lab:
-- Add Docker support to .NET Core application
-- Build container images
-- Run and debug applications from containers
-- Using Docker Compose to compose, build and run application
 
-## Run existing application
+During this lab you will take an existing application and port it to use Docker containers.
+
+Goals for this lab:
+- [Run existing application](#run)
+- [Add Docker support to .NET Core application](#add)
+- [Run and debug applications from containers](#debug)
+- [Build container images](#build)
+- [Running SQL Server in a Docker container](#sql)
+
+## <a name="run"></a>Run existing application
 We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 0 - Getting Started](Lab0-GettingStarted.md) to clone it now if you do not have the sources.
 
 Open the solution `RetroGaming2017.sln` in Visual Studio. Take your time to navigate the code and familiarize yourself with the various projects in the solution. You should be able to identify these:
@@ -22,13 +26,13 @@ Next, navigate to the Web API endpoint at http://localhost:31741/swagger. Experi
 
 Make sure you know how this application is implemented. Set breakpoints if necessary and navigate the flow of the application for the home page.
 
-## Add Docker support 
+## <a name="add"></a>Add Docker support 
 
 Visual Studio 2017 offers tooling for adding support to run your application in a Docker container. You will first add container support to the Web API project. 
 
 To get started you can right-click the Leaderboard.WebAPI project and select Add, Docker Support from the context menu. Choose Linux as the target operating system.
 
-![](images\AddDockerSupportTargetOS.png)
+<img src="images/AddDockerSupportTargetOS.png" width="400" />
 
 Observe the changes that Visual Studio makes to your solution.  
 
@@ -40,7 +44,7 @@ Repeat adding Docker support for the Web application project. More changes will 
 
 Run your application again. Which projects are effectively started? If some project is not running, start it by choosing Start, Debug instance from the right-click context menu of the project. 
 
-> @icon-info-circle Does the application still work?
+> Does the application still work?
 
 Now that the projects are running from a Docker container, the application might not work anymore. If not, try and find out what might be causing the issue. 
 
@@ -81,13 +85,13 @@ gamingwebapp:
 
 5. Change the IP address of the connection string in the application settings for the Web API to be your local IP address instead of `127.0.0.1`. This is a temporary fix.
 
-## Debugging with Docker container instances
+## <a name="debug"></a>Debugging with Docker container instances
 One of the nicest features of the Docker support in Visual Studio is the debugging support while running container instances. Check out how easy debugging is by stepping through the application like before.
 
 Put a breakpoint at the first statement of the `Index` method in the `HomeController` in the `GamingWebApp` project. Add another breakpoint in the `Get` method of the LeaderboardController in the Web API project.
 Run the application by pressing F5. You should be hitting the breakpoints and jump from one container instance to the other.
 
-## Building container images
+## <a name="build"></a>Building container images
 Start a command prompt and use the Docker CLI to check which container instances are running at the moment. There should be three containers related to the application:
 - SQL Server in `sqldocker`.
 - Web application in `dockercompose<id>_leaderboard.gamingwebapp_1`.
@@ -148,7 +152,7 @@ You should be able to create the Docker image successfully now. Run the Docker b
 > ##### Debug images from Visual Studio
 > Remember that Visual Studio creates Debug images that do not work when run from the Docker CLI. 
 
-## Running SQL Server in a Docker container
+## <a name="sql"></a>Running SQL Server in a Docker container
 
 Now that your application is running two projects in Docker containers, you can also run SQL Server from a container. This is convenient for isolated development and testing purposes. It eliminates the need to install SQL Server locally.
 
@@ -170,10 +174,10 @@ The new container service also requires these same environment variables. Add th
       - MSSQL_PID=Developer
       - ACCEPT_EULA=Y
     ports:
-      - "4433:1433"
+      - "1433:1433"
 ```
 
-> ##### @icon-info-circle Which additional changes are needed?
+> ##### Which additional changes are needed?
 > Stop and think about any other changes that might be required to take into account that the database server is now also running in a container.
 
 You will need to change the connection string for the Web API to reflect the new way of hosting of the database. Add a new environment variable for the connection string of the leaderboard.webapi service in the `docker-compose.override.yml` file:
@@ -192,3 +196,5 @@ With this change, you should be able to run your application completely from con
 
 ## Wrapup
 In this lab you have added Docker support to run both of your projects from Docker containers as well as the SQL Server instance. You enhanced the Docker Compose file that describes the composition of your complete application. in the next lab you will improve the networking part of the composition.
+
+Continue with [Lab 3 - Networking](lab3-networking.md).
