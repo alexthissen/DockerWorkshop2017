@@ -12,6 +12,10 @@ services:
     networks:
       - backend
       - frontend
+    secrets:
+     - KeyVaultName
+     - KeyVaultClientID
+     - KeyVaultClientSecret
 
   gamingwebapp:
     image: sdp2017/gamingwebapp
@@ -30,3 +34,11 @@ networks:
     driver: overlay
   backend:
     driver: overlay
+
+secrets:
+  KeyVaultName:
+    external: true
+  KeyVaultClientID:
+    external: true
+  KeyVaultClientSecret:
+    external: true
