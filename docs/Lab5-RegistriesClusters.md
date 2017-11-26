@@ -123,7 +123,7 @@ $env:DOCKER_HOST = "tcp://localhost:2374"  -- PowerShell or Git Shell
 
 - or -
 SET DOCKER_HOST=tcp://localhost:2374       -- Command prompt
-export DOCKER_HOST="tcp://localhost:2374"  -- Bash shell
+export DOCKER_HOST=tcp://localhost:2374    -- Bash shell
 ```
 You should now be able to run `docker images` and get a list of images unlike those on your local machine:
 ```

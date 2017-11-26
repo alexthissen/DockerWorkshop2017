@@ -9,7 +9,12 @@ Goals for this lab:
 
 Before you can get started with building pipelines, you need a Visual Studio Team Services (VSTS) account and a team project. You can use an existing VSTS account, or create a new one at [Visual Studio](https://www.visualstudio.com).
 
-Also, your cloned Git repository needs to be pushed to the VSTS proj
+Also, your cloned Git repository needs to be pushed to the VSTS project. Assuming you have your current work branch checked out, you can change the 
+
+```
+git remote set-url origin https://<your-vsts-account>.visualstudio.com/SDP2017/_git/dockerworkshop2017
+git push -u origin --all
+```
 
 ## Create build pipelines
 
@@ -17,10 +22,11 @@ Login to your VSTS account and switch to the correct team project. Go to the `Co
 
 From the available templates select the `ASP.NET with Containers` template to give yourself a head start.
 
-![](images/ASPNETWithContainersVSTSBuildTemplate.png)
+<img src="images/ASPNETWithContainersVSTSBuildTemplate.png" width="400" />
 
-Under the `Process` section for the build process, select `Hosted Linux (Preview)` as the Agent queue
-![](images/BuildProcessVSTS.png)
+Under the `Process` section for the build process, select `Hosted Linux (Preview)` as the Agent queue:
+
+<img src="images/BuildProcessVSTS.png" width="600" />
 
 Notice that this template assumes that you will use an Azure Container Registry. You can use one if you create it. The lab expects you to use the previously created Docker Hub registry.
 
@@ -33,19 +39,18 @@ Since you will use a Docker container to build the sources and images for Linux,
 
 Add a new Docker Compose task and name it `Build solution`. Change the Docker Compose file to be `docker-compose.ci.build.yml` and specify `up` as the compose command.
 
-After this new initial step there is compiled source code in the `bin\Docker\Release` folder 
+After this new initial step there is compiled source code in the `bin\Docker\Release` folder. Moving on to the next three tasks:
 
-Moving on to the next three tasks:
-<img src='images/DockerComposeVSTSTasks.png' width='200'/>
+<img src='images/DockerComposeVSTSTasks.png' width='150'/>
 
 Since you will use the Docker Hub registry created earlier, set the `Container Registry Type` to `Container Registry` instead of `Azure Container Registry` for each of those Docker Compose tasks. 
 
 Create a Docker Registry Connection by clicking the `+ New` link.
-![](images/NewVSTSConnection.png)
+<img src="images/NewVSTSConnection.png" width="600" />
 
 Fill in the details for the connection, specifying your credentials.
 
-![](images/DockerHubVSTSConnection.png)
+<img src="images/DockerHubVSTSConnection.png" width="500" />
 
 Select the connection to your Docker Hub from the dropdown. 
 
@@ -53,7 +58,7 @@ Notice how the Docker Compose file is already preselected to be `docker-compose.
 
 You can specify additional Docker Compose files and one is already selected. Leave it there and create an empty `docker-compose.ci.yml` file in the root of your solution.
 
-Repeat this process for the other two Docker Compose tasks and choose the Docker Hub connection. Notice the `Qualify Images` checkbox for `Push images` to qualify the image names with the registry name. Similarly, the `Lock images` task.
+Repeat this process for the other two Docker Compose tasks and choose the Docker Hub connection. Notice the `Qualify Images` checkbox for `Push images` to qualify the image names with the registry name.
 
 In the `Copy Files` task set the `Contents` property to these files:
 ```
@@ -78,11 +83,11 @@ services:
 version: '3.0'
 ```
 
-Notice how the image names have an appended SHA256 hash value to confirm their identity in the registry. This file can be used to release the images into the cluster later on.
+Notice how the image names have an appended SHA256 digest value to confirm their identity in the registry. This file can be used to release the images into the cluster later on.
 
 When your build has completed without errors, you should find that your Docker Hub registry has a new image that is tagged with the build number. Verify this at your Docker Registry located at https://hub.docker.com/r/<registryname>, replacing `<registryname>` with your registry's name.
 
-![](images/DockerHubRegistry.png)
+<img src="images/DockerHubRegistry.png" width="600" />
 
 If this all is working correctly you are ready to release the new image to the cluster.
 
@@ -93,6 +98,11 @@ The newly built Docker images are now located in the Docker Hub. You can release
 Create a new release definition from the Releases tab in VSTS. Choose an `Empty process` and name the first environment `Production`. Navigate to its empty task list and set the Agent selection to `Hosted` under the Agent phase.
 
 Add a Docker task to execute a remote command over SSH. You need a SSH connection that you can create from the task property for the connection.
+
+In the task use the same Docker command for deploying to update the current stack. 
+```
+docker stack deploy -c docker-compose.azure.yml retrogamingstack
+```
 
 ## Improve deployment details
 
@@ -113,6 +123,14 @@ deploy:
   delay: 5s
   max_attempts: 3
 ```
+
+Change these settings in the `docker-compose.azure.yml` file and connect to your cluster again using the SSH tunnel. Excute the Docker command to update the stack deployment from the Docker CLI. Examine the results by running:
+```
+docker stack services retrogamingstack
+```
+You should find that the `gamingwebapp` service has a higher numbers for the replication count in the services
+
+Finally, commit and push your changes. Run a new build and consequent release to verify that the deployment changes have been made.
 
 ## Wrapup
 
