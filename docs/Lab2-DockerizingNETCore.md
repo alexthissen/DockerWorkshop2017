@@ -10,7 +10,10 @@ Goals for this lab:
 - [Running SQL Server in a Docker container](#sql)
 
 ## <a name="run"></a>Run existing application
-We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 0 - Getting Started](Lab0-GettingStarted.md) to clone it now if you do not have the sources.
+We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 0 - Getting Started](Lab0-GettingStarted.md) to clone it now if you do not have the sources. Switch to the `Start` branch.
+
+> ##### Important
+> Make sure you have switched to the `Start` branch to use the right .NET solution. If you are still on the `master` branch, you will use the completed solution. 
 
 Open the solution `RetroGaming2017.sln` in Visual Studio. Take your time to navigate the code and familiarize yourself with the various projects in the solution. You should be able to identify these:
 - `GamingWebApp`, an ASP.NET MVC Core frontend 
