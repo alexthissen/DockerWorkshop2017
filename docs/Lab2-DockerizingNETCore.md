@@ -63,7 +63,7 @@ The Web API and application need a couple of changes to make them work again. He
 ports:
   - "1337:1337"
 ```
-2. Change the hosting URL of the Web API to be http://leaderboard.webapi:1337. Changing the port to 1337 is not required for fixing, but it clearly distinguishes the hosting in IIS Express (port 31741) from hosting in a Docker container (port 1337) and avoids port collission on port 80. 
+2. Change the hosting URL of the Web API to be http://leaderboard.webapi:1337. Changing the port to 1337 is not required for fixing, but it clearly distinguishes the hosting in IIS Express (port 31741) from hosting in a Docker container (port 1337) and avoids port collision on port 80. 
 ```
 environment:
   - ASPNETCORE_ENVIRONMENT=Development
