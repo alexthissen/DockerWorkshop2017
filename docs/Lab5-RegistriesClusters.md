@@ -16,7 +16,7 @@ Docker registries are to Docker container images what NuGet feeds are to NuGet p
 
 Visit the website of [Docker Hub](https://hub.docker.com/) at https://hub.docker.com/ and sign up for a new account. If you have one already, you might want to create a new organization.
 
-<img src="images/emptyDockerHub.png" width="500"/>
+<img src="images/EmptyDockerHub.png" width="500"/>
 
 Alternatively you can also create an Azure Container Registry which allows (multiple) private repositories inside your registry. 
 
