@@ -98,7 +98,7 @@ docker inspect <networkid>
 docker exec -it <containerid> bash
 ```
 
-The last command will give a bash from the container instance whose ID you specified. Run a command `ip a` and check how many ethernet adapters are lister. Verify that it corresponds with your design.
+The last command will give a bash from the container instance whose ID you specified. Run a command `ip a` and check how many ethernet adapters are listed. Verify that it corresponds with your design.
 
 You can also give a container instance an alias, so you can refer to it by a network alias instead of its container service name. Use the fragment below to give the SQL Server instance a network alias `sql1.seladeveloperpractice.local`.
 

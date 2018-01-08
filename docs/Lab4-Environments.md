@@ -38,7 +38,7 @@ The command will 'up' (meaning 'start') the composition and perform a build and 
 
 Later you will use this composition in your build pipeline to perform the build and publishing of the binaries required to create the container images of the solution.
 
-## ## <a name="create"></a>Create compositions for different environments
+## <a name="create"></a>Create compositions for different environments
 
 One of the useful features of Docker Compose is the layering and cascading of multiple YAML compose files. With it you can introduce concepts such as base compositions, inheritance and overrides.
 
